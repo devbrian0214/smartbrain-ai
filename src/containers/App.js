@@ -13,8 +13,35 @@ class App extends Component {
     this.state = {
       input: "",
       imageUrl: "",
+      Boxes: [],
     };
   }
+
+  calculateLocationFace = (regions) => {
+    let regionArrays = [];
+    const mainImage = document.getElementById("mainImage");
+    const width = Number(mainImage.width);
+    const height = Number(mainImage.height);
+
+    //calculate top,right, bottom,left of each box
+    for (let region of regions) {
+      let { left_col, top_row, right_col, bottom_row } =
+        region["region_info"]["bounding_box"];
+
+      regionArrays.push({
+        leftCol: left_col * width,
+        topRow: top_row * height,
+        rightCol: width - right_col * width,
+        bottomRow: height - bottom_row * height,
+      });
+    }
+
+    return regionArrays;
+  };
+
+  displayBoxesFace = (Boxes) => {
+    this.setState({ Boxes: Boxes });
+  };
 
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
@@ -23,6 +50,7 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
 
+    // fetching face_detection Clarifai API
     const raw = JSON.stringify({
       user_app_id: {
         user_id: process.env.REACT_APP_USER_ID,
@@ -56,15 +84,16 @@ class App extends Component {
     )
       .then((response) => response.json())
       .then((result) =>
-        console.log(
-          result.outputs[0].data.regions[0]["region_info"]["bounding_box"]
+        this.displayBoxesFace(
+          this.calculateLocationFace(result.outputs[0].data.regions)
         )
       )
       .catch((error) => console.log("error", error));
   };
 
   render() {
-    const { imageUrl } = this.state;
+    const { imageUrl, Boxes } = this.state;
+
     return (
       <div className="App">
         <BgParticles />
@@ -75,7 +104,7 @@ class App extends Component {
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit}
         />
-        {imageUrl && <FacialRecognition imageUrl={imageUrl} />}
+        {imageUrl && <FacialRecognition Boxes={Boxes} imageUrl={imageUrl} />}
       </div>
     );
   }
