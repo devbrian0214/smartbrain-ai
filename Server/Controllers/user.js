@@ -14,15 +14,15 @@ export const signin = async (req, res) => {
 
     // check existed user and compare password
     if (!existedUser && !bcrypt.compareSync(password, existedUser.hash))
-      responses._404(res, { message: 'Sign-in failed' });
+      responses._404(res, { message: 'Failed' });
 
     // send response
     responses._200(res, {
       user: existedUser,
-      message: 'Sucessful signed in',
+      message: 'Sucessful',
     });
   } catch (error) {
-    responses._401(res, { message: 'Sign-in failed' });
+    responses._401(res, { message: 'Failed' });
   }
 };
 
@@ -30,7 +30,7 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const hash = bcrypt.hashSync(password, 2);
+    const hash = bcrypt.hashSync(password, 10);
 
     // register new user to db
     await db.transaction(async trx => {
@@ -46,23 +46,9 @@ export const register = async (req, res) => {
         joined: new Date(),
       });
       // send response
-      responses._201(res, { user: newUser, message: 'Sucessful registered' });
+      responses._201(res, { user: newUser, message: 'Sucessful' });
     });
   } catch (error) {
-    responses._401(res, { message: 'Register failed' });
-  }
-};
-
-export const getUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const [existedUser] = await db.select('*').from('users').where({ id });
-
-    if (!existedUser) responses._404(res, { message: 'Get user failed' });
-
-    responses._200(res, { user: existedUser, message: 'Sucessful get user' });
-  } catch (error) {
-    responses._401(res, { message: 'Get user failed' });
+    responses._401(res, { message: 'Failed' });
   }
 };
