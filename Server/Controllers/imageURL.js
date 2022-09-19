@@ -14,6 +14,12 @@ export const handleImageURL = (req, res) => {
   try {
     const { imageURL } = req.body;
 
+    // check inputs
+    if (!imageURL) {
+      responses._404(res, { message: 'Failed' });
+      return;
+    }
+
     stub.PostModelOutputs(
       {
         user_app_id: {
@@ -45,6 +51,11 @@ export const handleImageURL = (req, res) => {
 
         for (let region of output) {
           regionArr.push(region['region_info']['bounding_box']);
+        }
+
+        if (!regionArr.length) {
+          responses._404(res, { message: 'Failed' });
+          return;
         }
 
         // send response

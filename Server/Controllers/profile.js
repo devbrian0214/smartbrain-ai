@@ -5,10 +5,19 @@ export const getProfile = async (req, res) => {
   try {
     const { id } = req.params;
 
+    // check inputs
+    if (!id) {
+      responses._404(res, { message: 'Failed' });
+      return;
+    }
+
     // get profile with id
     const [existedUser] = await db.select('*').from('users').where({ id });
 
-    if (!existedUser) responses._404(res, { message: 'Failed' });
+    if (!existedUser) {
+      responses._404(res, { message: 'Failed' });
+      return;
+    }
 
     // send response
     responses._200(res, { user: existedUser, message: 'Sucessful' });
@@ -21,6 +30,12 @@ export const updateProfileEntries = async (req, res) => {
   try {
     const { id } = req.body;
 
+    // check inputs
+    if (!id) {
+      responses._404(res, { message: 'Failed' });
+      return;
+    }
+
     // update profile entries point
     const [entries] = await db
       .returning('entries')
@@ -29,7 +44,10 @@ export const updateProfileEntries = async (req, res) => {
       .where({ id })
       .increment('entries', 1);
 
-    if (!entries) responses._404(res, { message: 'Failed' });
+    if (!entries) {
+      responses._404(res, { message: 'Failed' });
+      return;
+    }
 
     // send response
     responses._200(res, {
