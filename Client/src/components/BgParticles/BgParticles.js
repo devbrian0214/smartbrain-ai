@@ -1,18 +1,18 @@
-import React, { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import "./BgParticles.css";
+import React, { useCallback } from 'react';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
+import './BgParticles.css';
 const particlesOptions = {
   fpsLimit: 120,
   interactivity: {
     events: {
       onClick: {
         enable: true,
-        mode: "push",
+        mode: 'push',
       },
       onHover: {
         enable: true,
-        mode: "repulse",
+        mode: 'repulse',
       },
       resize: true,
     },
@@ -28,26 +28,26 @@ const particlesOptions = {
   },
   particles: {
     color: {
-      value: "#ffffff",
+      value: '#ffffff',
     },
     links: {
-      color: "#ffffff",
+      color: '#ffffff',
       distance: 150,
       enable: true,
       opacity: 0.5,
       width: 1,
     },
     collisions: {
-      enable: true,
+      enable: false,
     },
     move: {
-      directions: "none",
+      directions: 'none',
       enable: true,
       outModes: {
-        default: "bounce",
+        default: 'bounce',
       },
       random: false,
-      speed: 3,
+      speed: 5,
       straight: false,
     },
     number: {
@@ -61,7 +61,7 @@ const particlesOptions = {
       value: 0.5,
     },
     shape: {
-      type: "circle",
+      type: 'circle',
     },
     size: {
       value: { min: 1, max: 5 },
@@ -71,11 +71,11 @@ const particlesOptions = {
 };
 
 const BgParticles = () => {
-  const particlesInit = useCallback(async (engine) => {
+  const particlesInit = useCallback(async engine => {
     await loadFull(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container) => {}, []);
+  const particlesLoaded = useCallback(async container => {}, []);
 
   return (
     <Particles
