@@ -47,11 +47,9 @@ export const handleImageURL = (req, res) => {
         const output = response.outputs[0].data.regions;
 
         // extract region_info into array of regions
-        const regionArr = [];
-
-        for (let region of output) {
-          regionArr.push(region['region_info']['bounding_box']);
-        }
+        const regionArr = output.map(
+          region => region['region_info']['bounding_box']
+        );
 
         if (!regionArr.length) {
           responses._404(res, { message: 'Failed' });

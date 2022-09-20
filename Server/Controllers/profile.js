@@ -37,21 +37,21 @@ export const updateProfileEntries = async (req, res) => {
     }
 
     // update profile entries point
-    const [entries] = await db
+    const [userEntries] = await db
       .returning('entries')
       .select('*')
       .from('users')
       .where({ id })
       .increment('entries', 1);
 
-    if (!entries) {
+    if (!userEntries) {
       responses._404(res, { message: 'Failed' });
       return;
     }
 
     // send response
     responses._200(res, {
-      userEntry: entries,
+      entries: userEntries.entries,
       message: 'Sucessful',
     });
   } catch (error) {
