@@ -16,32 +16,38 @@ export const signin = async (req, res) => {
       return;
     }
 
-    // check if user existed
-    const [existedUser] = await db
-      .select('hash', 'email')
-      .from('login')
-      .where({ email });
+    await db.transaction(async trx => {
+      // check if user existed
+      const [existedUser] = await trx('login')
+        .select('hash', 'email')
+        .where({ email });
 
-    // check existed user and compare password
-    if (!existedUser || !bcrypt.compareSync(password, existedUser.hash)) {
-      responses._404(res, { message: 'Failed' });
-      return;
-    }
-
-    //sign jwt token with expired time
-    const token = jwt.sign(
-      { email: existedUser.email },
-      process.env.KEY_TOKEN,
-      {
-        expiresIn: process.env.EXPIRED_TIME,
+      // check existed user and compare password
+      if (
+        !existedUser.email ||
+        !bcrypt.compareSync(password, existedUser.hash)
+      ) {
+        responses._404(res, { message: 'Failed' });
+        return;
       }
-    );
 
-    // send response
-    responses._200(res, {
-      user: { email: existedUser.email },
-      token,
-      message: 'Sucessful',
+      // get user from user table
+      const [user] = await trx('users')
+        .returning('*')
+        .select('*')
+        .where({ email: existedUser.email });
+
+      //sign jwt token with expired time
+      const token = jwt.sign(user, process.env.KEY_TOKEN, {
+        expiresIn: process.env.EXPIRED_TIME,
+      });
+
+      // send response
+      responses._200(res, {
+        user,
+        token,
+        message: 'Sucessful',
+      });
     });
   } catch (error) {
     responses._401(res, { message: 'Failed' });
@@ -76,15 +82,11 @@ export const register = async (req, res) => {
       });
 
       //sign jwt token with expired time
-      const token = jwt.sign({ email: newUser.email }, process.env.KEY_TOKEN, {
+      const token = jwt.sign({ user: newUser }, process.env.KEY_TOKEN, {
         expiresIn: process.env.EXPIRED_TIME,
       });
-
-      //get the rest but id
-      const { id, ...data } = newUser;
-
       // send response
-      responses._201(res, { user: data, token, message: 'Sucessful' });
+      responses._201(res, { user: newUser, token, message: 'Sucessful' });
     });
   } catch (error) {
     responses._401(res, { message: 'Failed' });

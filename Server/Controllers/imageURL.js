@@ -12,10 +12,10 @@ metadata.set('authorization', 'Key ' + process.env.CLA_PAT);
 
 export const handleImageURL = (req, res) => {
   try {
-    const { imageURL } = req.body;
+    const { imageUrl } = req.body;
 
     // check inputs
-    if (!imageURL) {
+    if (!imageUrl) {
       responses._404(res, { message: 'Failed' });
       return;
     }
@@ -28,7 +28,7 @@ export const handleImageURL = (req, res) => {
         },
         model_id: process.env.CLA_MODEL_ID,
         inputs: [
-          { data: { image: { url: imageURL, allow_duplicate_url: true } } },
+          { data: { image: { url: imageUrl, allow_duplicate_url: true } } },
         ],
       },
       metadata,
