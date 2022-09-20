@@ -10,9 +10,7 @@ export const auth = (req, res, next) => {
 
     if (token) {
       // verify token with secret text
-      decodedData = jwt.verify(token, process.env.KEY_TOKEN);
-
-      req.decodedData = decodedData;
+      const decodedData = jwt.verify(token, process.env.KEY_TOKEN);
 
       if (!decodedData) {
         responses._401(res, { message: 'Failed' });
