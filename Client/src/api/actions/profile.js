@@ -1,4 +1,4 @@
-import * as api from '../index.js';
+import * as api from '../api.js';
 
 export const getProfile = async id => {
   try {

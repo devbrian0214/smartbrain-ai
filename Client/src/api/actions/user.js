@@ -1,4 +1,4 @@
-import * as api from '../index.js';
+import * as api from '../api.js';
 import { SIGNIN, REGISTER } from '../../constants/index';
 
 export const authentication = async (formObj, type) => {
