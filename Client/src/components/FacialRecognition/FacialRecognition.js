@@ -1,9 +1,10 @@
-import React from "react";
-import "./FacialRecognition.css";
+import React from 'react';
+import './FacialRecognition.css';
 
 const FacialRecognition = ({ Boxes, imageUrl }) => {
-  const ArrBoxes = Boxes?.map((Box) => (
+  const ArrBoxes = Boxes?.map((Box, i) => (
     <div
+      key={i}
       className="bounding-box"
       style={{
         top: Box.topRow,
