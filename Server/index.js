@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 
@@ -22,6 +21,7 @@ app.use('/imageURL', imageRouter);
 app.get('/', (req, res) => {
   res.send('Welcome to SmartBrainAi server');
 });
+
 // PORT
 const PORT = process.env.PORT || 5000;
 
