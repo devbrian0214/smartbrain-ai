@@ -1,5 +1,5 @@
 import * as api from '../api.js';
-import { SIGNIN, REGISTER } from '../../constants/index';
+import { SIGNIN, REGISTER } from '../../constants/constants.js';
 
 export const authentication = async (formObj, type) => {
   try {
