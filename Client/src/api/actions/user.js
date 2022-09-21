@@ -3,22 +3,19 @@ import { SIGNIN, REGISTER } from '../../constants/constants.js';
 
 export const authentication = async (formObj, type) => {
   try {
-    if (type === SIGNIN) {
-      const data = await api.signin(formObj);
+    const { data } =
+      type === SIGNIN
+        ? await api.signin(formObj)
+        : type === REGISTER
+        ? await api.register(formObj)
+        : null;
 
-      if (!data) throw Error('Cannot sign in');
+    if (data === null) throw Error('Error Credentials');
 
-      //store data on localStorage
-      localStorage.setItem('userProfile', JSON.stringify({ ...data }));
+    //store data on localStorage
+    localStorage.setItem('userProfile', JSON.stringify({ ...data }));
 
-      return data;
-    } else if (type === REGISTER) {
-      const data = await api.register(formObj);
-
-      if (!data) throw Error('Cannot register');
-
-      return;
-    }
+    return data.user;
   } catch (error) {
     console.log(error);
   }

@@ -7,10 +7,9 @@ const API = axios.create({
 
 // send token back to server to verify authentication
 API.interceptors.request.use(req => {
-  if (localStorage.getItem('userProfile'))
-    req.headers.authorization = `Bearer ${
-      JSON.parse(localStorage.getItem('userProfile')).data.token
-    }`;
+  const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+  if (userProfile) req.headers.authorization = `Bearer ${userProfile.token}`;
 
   return req;
 });
@@ -21,7 +20,8 @@ export const register = formObj => API.post('/user/register', formObj);
 
 // GET PROFILE AND UPDATE ENTRIES
 export const getProfile = id => API.get(`/profile/${id}`);
-export const updateProfileEntries = formObj => API.post('/profile', formObj);
+export const updateProfileEntries = formObj =>
+  API.patch('/profile/entries', formObj);
 
 // DETECT FACIAL IMAGE
 export const handleImageURL = imageURLObj => API.post('/imageURL', imageURLObj);

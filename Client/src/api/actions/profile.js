@@ -12,9 +12,9 @@ export const getProfile = async id => {
   }
 };
 
-export const updateProfileEntries = async formData => {
+export const updateProfileEntries = async formObj => {
   try {
-    const data = await api.updateProfileEntries(formData);
+    const data = await api.updateProfileEntries(formObj);
 
     if (!data) throw Error('Cannot update profile entries');
 
