@@ -1,8 +1,8 @@
-# SMART BRAIN AI
+# SMART BRAIN AI 🤖
 
 ## An AI web application that can detect multi-faces in a given image
 
-![]()
+![](https://github.com/Liam1809/smartbrain-ai/blob/master/Assets/animated.gif)
 
 ## Ultilities:
 
