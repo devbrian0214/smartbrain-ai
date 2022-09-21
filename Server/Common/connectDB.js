@@ -14,3 +14,14 @@ export const db = knex({
     database: process.env.DATABASE,
   },
 });
+
+//connect server database
+// export const db = knex({
+//   client: process.env.CLIENT,
+//   connection: {
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//       rejectUnauthorized: false,
+//     },
+//   },
+// });
