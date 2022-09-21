@@ -1,0 +1,11 @@
+.styling {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(89deg, #0077b6 0%, #00b4d8 100%);
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  padding-top: 25px;
+}
