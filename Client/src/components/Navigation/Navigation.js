@@ -7,21 +7,21 @@ const Navigation = ({ onChangeRoute, route }) => {
       {route === HOME ? (
         <p
           onClick={() => onChangeRoute(SIGNOUT)}
-          className="f3 link dim pa3 pointer"
+          className="f3 link pa3 pointer hover-black"
         >
           Sign Out
         </p>
       ) : route === REGISTER ? (
         <p
           onClick={() => onChangeRoute(SIGNIN)}
-          className="f3 link dim pa3 pointer"
+          className="f3 link pa3 pointer hover-black"
         >
           Sign In
         </p>
       ) : (
         <p
           onClick={() => onChangeRoute(REGISTER)}
-          className="f3 link dim pa3 pointer"
+          className="f3 link pa3 pointer hover-black"
         >
           Register
         </p>
