@@ -1,12 +1,12 @@
 # SMART BRAIN AI 🤖
 
-## An AI web application that can detect multi-faces in a given image
+## An AI web application that can detect multi-faces in a given image URL
 
 ![](https://github.com/Liam1809/smartbrain-ai/blob/master/Assets/animated.gif)
 
 ## Ultilities:
 
-- implementing [CLARIFAI](https://docs.clarifai.com) API endpoints to detect an image with multi-faces
+- implementing [CLARIFAI](https://docs.clarifai.com) API endpoints to detect an image URL with multi-faces
 - allow signin/register to checkup the ranking
 
 ## Techstack:
